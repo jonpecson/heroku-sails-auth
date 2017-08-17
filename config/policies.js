@@ -20,14 +20,15 @@
 
 module.exports.policies = {
 
-  '*': ['isAuthorized'],
+    '*': ['isAuthorized'],
 
-  'UserController': {
-    'create': true
-  },
 
-  'AuthController': {
-    '*': true
-  }
+    'UserController': {
+        'create': true
+    },
+
+    'AuthController': {
+        'login': true,
+        'activate': ['isAuthorized']
+    },
 };
-

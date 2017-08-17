@@ -1,5 +1,22 @@
-# sails-auth-example
+# Token based authentication using Sails JS
 
-Example sails authentication API for [hellosails.com](https://hellosails.com).
 
-[Read the blog post](https://hellosails.com/building-api-authentication-from-scratch-part-2/)
+### Installing
+```
+npm install
+```
+
+```
+sails lift
+```
+
+### Deploy to Heroku
+```
+heroku apps:create
+```
+
+```
+git push heroku master
+```
+
+[Source](https://hellosails.com/building-api-authentication-from-scratch-part-2/)
