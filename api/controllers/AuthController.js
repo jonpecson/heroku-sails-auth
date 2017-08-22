@@ -28,34 +28,33 @@ module.exports = {
         var params = req.params.all();
         sails.log.debug(req.params.all());
 
-        var email = req.param('email');
-        var id = req.param('id');
-        var token = req.param('token');
+        let token = req.param('token');
+        JwtService.verify(token, function(err, decoded) {
+            if (err) return ResponseService.json(401, res, "Invalid Token!");
+            var id = decoded.id;
+            User.findOne(id).exec(function(err, user) {
+                if (err) {
+                    sails.log.debug(err);
+                    res.send(500, err);
+                }
+                if (!user) {
+                    sails.log.debug(err);
+                    ResponseService.json(500, res, "Could not find the specified account.", params)
+                } else {
+                    user.isActivated = true;
+                    user.save(function(err) {
+                        if (err) {
+                            return res.serverError(err);
+                        } else {
+                            ResponseService.json(200, res, "User has been activated successfully", params)
+                            sails.log.debug('User has been activated successfully');
+                        }
 
-        User.findOne(id).exec(function(err, user) {
-            if (err) {
-                sails.log.debug(err);
-                res.send(500, err);
-            }
-            if (!user) {
-                sails.log.debug(err);
-                ResponseService.json(500, res, "Could not find the specified account.", params)
-            } else {
-                user.isActivated = true;
-                user.save(function(err) {
-                    if (err) {
-                        return res.serverError(err);
-                    } else {
-                        ResponseService.json(200, res, "User has been activated successfully", params)
-                        sails.log.debug('User has been activated successfully');
-                        return res.ok();
-                    }
+                    }); //</user.save()>
+                }
 
-                }); //</user.save()>
-            }
-
+            });
         });
-
     }
 
 };
