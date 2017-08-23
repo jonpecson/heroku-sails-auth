@@ -39,14 +39,14 @@ module.exports = {
                 }
                 if (!user) {
                     sails.log.debug(err);
-                    ResponseService.json(500, res, "Could not find the specified account.", params)
+                    ResponseService.json(500, res, "Could not find the specified account.")
                 } else {
                     user.isActivated = true;
                     user.save(function(err) {
                         if (err) {
                             return res.serverError(err);
                         } else {
-                            ResponseService.json(200, res, "User has been activated successfully", params)
+                            ResponseService.json(200, res, "User has been activated successfully")
                             sails.log.debug('User has been activated successfully');
                         }
 
